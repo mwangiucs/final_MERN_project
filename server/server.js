@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import courseRoutes from './routes/courseRoutes.js';
 import studentRoutes from './routes/studentRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 import enrollmentRoutes from './routes/enrollmentRoutes.js';
 import aiRoutes from './routes/aiRoutes.js';
 import instructorRoutes from './routes/instructorRoutes.js';
@@ -37,6 +38,7 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/lms')
 
 // Routes
 app.use('/api/courses', courseRoutes);
+app.use('/api/auth', authRoutes);
 app.use('/api/students', studentRoutes);
 app.use('/api/enrollments', enrollmentRoutes);
 app.use('/api/enroll', enrollmentRoutes);

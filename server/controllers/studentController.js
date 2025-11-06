@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken';
 import Student from '../models/Student.js';
 import { validationResult } from 'express-validator';
 
+const JWT_SECRET = process.env.JWT_SECRET || 'dev_jwt_secret';
+
 export const register = async (req, res, next) => {
   try {
     const errors = validationResult(req);
@@ -33,11 +35,7 @@ export const register = async (req, res, next) => {
     await student.save();
 
     // Generate JWT
-    const token = jwt.sign(
-      { id: student._id },
-      process.env.JWT_SECRET,
-      { expiresIn: '30d' }
-    );
+    const token = jwt.sign({ id: student._id }, JWT_SECRET, { expiresIn: '30d' });
 
     res.status(201).json({
       token,
@@ -75,11 +73,7 @@ export const login = async (req, res, next) => {
     }
 
     // Generate JWT
-    const token = jwt.sign(
-      { id: student._id },
-      process.env.JWT_SECRET,
-      { expiresIn: '30d' }
-    );
+    const token = jwt.sign({ id: student._id }, JWT_SECRET, { expiresIn: '30d' });
 
     res.json({
       token,
